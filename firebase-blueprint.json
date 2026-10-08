@@ -1,0 +1,193 @@
+{
+  "entities": {
+    "Conversation": {
+      "title": "Conversation",
+      "description": "Chat conversation thread",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 200 },
+        "deviceId": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["title", "deviceId"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Message in a conversation",
+      "type": "object",
+      "properties": {
+        "conversationId": { "type": "string", "maxLength": 128 },
+        "role": { "type": "string", "enum": ["user", "assistant", "system"] },
+        "content": { "type": "string", "maxLength": 100000 },
+        "attachments": { "type": "string", "maxLength": 2000000 },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["conversationId", "role", "content"]
+    },
+    "Note": {
+      "title": "Note",
+      "description": "Game development notes and ideas",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 200 },
+        "content": { "type": "string", "maxLength": 50000 },
+        "deviceId": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "folderId": { "type": "string", "maxLength": 128 },
+        "category": { "type": "string", "maxLength": 100 },
+        "section": { "type": "string", "maxLength": 100 },
+        "status": { "type": "string", "maxLength": 50 },
+        "aiSummary": { "type": "string", "maxLength": 2000 },
+        "lastActivity": { "type": "string", "maxLength": 64 },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["title", "deviceId"]
+    },
+    "NoteFolder": {
+      "title": "NoteFolder",
+      "description": "Organizing folder for notes",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 100 },
+        "color": { "type": "string", "maxLength": 50 },
+        "section": { "type": "string", "maxLength": 50 },
+        "status": { "type": "string", "maxLength": 50 },
+        "deviceId": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["name", "deviceId"]
+    },
+    "UserMemory": {
+      "title": "UserMemory",
+      "description": "Long-term remembered facts about the user",
+      "type": "object",
+      "properties": {
+        "content": { "type": "string", "maxLength": 2000 },
+        "kind": { "type": "string", "maxLength": 50 },
+        "deviceId": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["content", "deviceId"]
+    },
+    "Profile": {
+      "title": "Profile",
+      "description": "User profile data",
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string", "maxLength": 100 },
+        "avatarUrl": { "type": "string", "maxLength": 5000 },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["displayName"]
+    },
+    "OrionConfig": {
+      "title": "OrionConfig",
+      "description": "System prompt and behavior settings for Orion",
+      "type": "object",
+      "properties": {
+        "personality": { "type": "string", "maxLength": 10000 },
+        "behavior": { "type": "string", "maxLength": 10000 },
+        "context": { "type": "string", "maxLength": 10000 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      }
+    },
+    "OrionKnowledge": {
+      "title": "OrionKnowledge",
+      "description": "Custom knowledge entries for game dev domain",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 200 },
+        "content": { "type": "string", "maxLength": 100000 },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["title", "content"]
+    },
+    "OrionBuildaScript": {
+      "title": "OrionBuildaScript",
+      "description": "Game engine / Builda scripts repository",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 200 },
+        "description": { "type": "string", "maxLength": 2000 },
+        "code": { "type": "string", "maxLength": 50000 },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["title", "code"]
+    },
+    "OrionReferenceImage": {
+      "title": "OrionReferenceImage",
+      "description": "Art and character reference images",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 200 },
+        "description": { "type": "string", "maxLength": 2000 },
+        "url": { "type": "string", "maxLength": 5000 },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["name", "url"]
+    },
+    "TestConnection": {
+      "title": "TestConnection",
+      "description": "Ping document for verifying Firestore connectivity",
+      "type": "object",
+      "properties": {
+        "status": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/test/{testId}": {
+      "schema": "TestConnection",
+      "description": "Connection validation probe"
+    },
+    "/conversations/{conversationId}": {
+      "schema": "Conversation",
+      "description": "User conversations"
+    },
+    "/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Messages inside conversations"
+    },
+    "/notes/{noteId}": {
+      "schema": "Note",
+      "description": "Notes for game planning"
+    },
+    "/note_folders/{folderId}": {
+      "schema": "NoteFolder",
+      "description": "Folders for organizing notes"
+    },
+    "/user_memory/{memoryId}": {
+      "schema": "UserMemory",
+      "description": "Persistent memory facts extracted by Orion"
+    },
+    "/profiles/{profileId}": {
+      "schema": "Profile",
+      "description": "User profile documents"
+    },
+    "/orion_config/{configId}": {
+      "schema": "OrionConfig",
+      "description": "Global Orion character configuration"
+    },
+    "/orion_knowledge/{knowledgeId}": {
+      "schema": "OrionKnowledge",
+      "description": "Knowledge base entries"
+    },
+    "/orion_builda_scripts/{scriptId}": {
+      "schema": "OrionBuildaScript",
+      "description": "Builda game engine scripts"
+    },
+    "/orion_reference_images/{imageId}": {
+      "schema": "OrionReferenceImage",
+      "description": "Reference images for character design"
+    }
+  }
+}

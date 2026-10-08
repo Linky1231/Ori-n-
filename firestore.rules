@@ -1,0 +1,88 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global safety net: default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.email == 'linky5108@gmail.com';
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Health check and connection validation probe
+    match /test/{testId} {
+      allow read: if true;
+    }
+
+    // Profiles: public read, owner or admin write
+    match /profiles/{profileId} {
+      allow read: if true;
+      allow create, update: if isOwner(profileId) || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Orion Global Knowledge & Configuration: readable by all, managed by admin or authenticated user in dev
+    match /orion_config/{configId} {
+      allow read: if true;
+      allow write: if isAdmin() || isSignedIn();
+    }
+
+    match /orion_knowledge/{knowledgeId} {
+      allow read: if true;
+      allow write: if isAdmin() || isSignedIn();
+    }
+
+    match /orion_builda_scripts/{scriptId} {
+      allow read: if true;
+      allow write: if isAdmin() || isSignedIn();
+    }
+
+    match /orion_reference_images/{imageId} {
+      allow read: if true;
+      allow write: if isAdmin() || isSignedIn();
+    }
+
+    // User chats & messages
+    match /conversations/{conversationId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    match /messages/{messageId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Notes and Folders
+    match /notes/{noteId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    match /note_folders/{folderId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Memory
+    match /user_memory/{memoryId} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}

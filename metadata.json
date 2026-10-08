@@ -1,0 +1,6 @@
+{
+  "name": "Orión Estellar v5.0",
+  "description": "Orión Estellar: la asistente de IA con personalidad propia para creadores de videojuegos. Programación, arte y diseño de niveles.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
